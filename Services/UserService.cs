@@ -16,7 +16,7 @@ namespace Software1_IIPA24.Services
             UserReposiyoty userReposiyoty = new UserReposiyoty();
             try
             {
-                userModel.Password = Encrypt.GetSHA256(userModel.Password);
+                userModel.Password = EncryptUtility.GetSHA256(userModel.Password);
 
                 if (userReposiyoty.BuscarUsuario(userModel.Username))
                 {
@@ -52,7 +52,7 @@ namespace Software1_IIPA24.Services
         public UserDto LoginUser(UserDto userModel)
         {
             UserReposiyoty userReposiyoty = new UserReposiyoty();
-            userModel.Password = Encrypt.GetSHA256(userModel.Password);
+            userModel.Password = EncryptUtility.GetSHA256(userModel.Password);
             UserDto userResponse = userReposiyoty.Login(userModel);
             if (userResponse.IdUser != 0)
             {

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Software1_IIPA24.Utilities
 {
-    public class Encrypt
+    public class EncryptUtility
     {
         public static string GetSHA256(string str)
         {
