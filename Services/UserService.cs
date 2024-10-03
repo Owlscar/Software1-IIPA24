@@ -1,10 +1,6 @@
 ﻿using Software1_IIPA24.Dtos;
 using Software1_IIPA24.Repositories;
 using Software1_IIPA24.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Software1_IIPA24.Services
 {
@@ -57,6 +53,12 @@ namespace Software1_IIPA24.Services
             if (userResponse.IdUser != 0)
             {
                 userResponse.Message = "Successful Login";
+
+                EmailConfigUtility gestorCorreo = new EmailConfigUtility();
+                string destinatario = "caballero1094@hotmail.com";
+                string asunto = "Registro exito / Reporte Semannal / ...";
+                string mensaje = this.mensaje(userResponse.Name);
+                gestorCorreo.EnviarCorreo(destinatario, asunto, mensaje, true);
             }
             else
             {
@@ -64,6 +66,24 @@ namespace Software1_IIPA24.Services
             }
 
             return userResponse;
+        }
+        public string mensaje(string name)
+        {
+            string mensaje = "<html>" +
+                    "<body>" +
+                        "<h1> INGENIERIA DE SOFTWARE 1 </h1>" +
+                        "</br>" +
+                        "<p> Bienvenido(a) <b> " + name + " </b></p>" +
+                        "<p> Notificación Automatica. <b> No responder a este correo.</b></p>" +
+                        "<ol>" +
+                            "<li> Item 1 </li>" +
+                            "<li> Item 2 </li>" +
+                            "<li> Item 3 </li>" +
+                        "</ol>" +
+                    "</body>" +
+                    "</html> ";
+
+            return mensaje;
         }
     }
 }

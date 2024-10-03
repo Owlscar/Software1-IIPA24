@@ -130,6 +130,7 @@
     <Compile Include="Repositories\UserReposiyoty.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utilities\DBContextUtility.cs" />
+    <Compile Include="Utilities\EmailConfigUtility.cs" />
     <Compile Include="Utilities\EncryptUtility.cs" />
   </ItemGroup>
   <ItemGroup>
