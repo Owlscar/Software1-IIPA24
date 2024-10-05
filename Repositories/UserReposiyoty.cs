@@ -24,6 +24,39 @@ namespace Software1_IIPA24.Repositories
             return comando;
         }
 
+        public UserListDto ListarUsuarios()
+        {
+            UserListDto userList = new UserListDto();
+            string SQL = "SELECT name,username,id_user,id_role,id_state " +
+                "FROM TEST.dbo.[USER]";
+            DBContextUtility Connection = new DBContextUtility();
+            Connection.Connect();
+            using (SqlCommand command = new SqlCommand(SQL, Connection.CONN()))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        UserDto userResult = new UserDto
+                        {
+                            IdUser = reader.GetInt32(2),
+                            IdRole = reader.GetInt32(3),
+                            IdState = reader.GetInt32(4),
+                            Name = reader.GetString(0),
+                            Username = reader.GetString(1)
+                        };
+
+                        userResult.Password = "23";
+
+                        userList.Users.Add(userResult);
+                    }
+                }
+            }
+            Connection.Disconnect();
+
+            return userList;
+        }
+
         public bool BuscarUsuario(string username)
         {
             bool result = false;

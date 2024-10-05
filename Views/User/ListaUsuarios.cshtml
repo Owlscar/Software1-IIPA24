@@ -1,0 +1,39 @@
+﻿@model Software1_IIPA24.Dtos.UserListDto
+
+@{
+    ViewBag.Title = "ListaUsuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ListaUsuarios</h2>
+
+<div>
+    <h4>UserListDto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+    <table>
+        <tr>
+            <th>ID USUARIO</th>
+            <th>NOMBRE</th>
+            <th>NICK</th>
+            <th>ESTADO</th>
+            <th></th>
+            <th>ACTIONS</th>
+        </tr>
+        @foreach (Software1_IIPA24.Dtos.UserDto user in @Model.Users)
+        {
+            <tr>
+                <td>@user.IdUser</td>
+                <td>@user.Name</td>
+                <th>@user.Username</th>
+                <td>@user.IdState</td>
+                <td>@user.Password</td>
+                <td>@Html.ActionLink("Editar", "EditUser", null, new { @class = "btn-outline-primary" })</td>
+            </tr>
+        }
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Menu Usuario", "Index", null, new { @class = "btn-outline-primary" })
+</p>
