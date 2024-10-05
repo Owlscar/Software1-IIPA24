@@ -16,17 +16,18 @@ namespace Software1_IIPA24.Controllers
             return View();
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: User/Create
         public ActionResult Create()
         {
             UserDto user = new UserDto();
             return View(user);
+        }
+
+        public ActionResult ListaUsuarios()
+        {
+            UserService userService = new UserService();
+            UserListDto usersList = userService.ListarUsuarios();
+            return View(usersList);
         }
 
         // POST: User/Create
@@ -52,48 +53,58 @@ namespace Software1_IIPA24.Controllers
             }
         }
 
-        // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Register
+        public ActionResult Login()
         {
-            return View();
+            UserDto user = new UserDto();
+            return View(user);
         }
 
-        // POST: User/Edit/5
+        //POST Login
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Login(UserDto user)
         {
-            try
-            {
-                // TODO: Add update logic here
+            UserService userService = new UserService();
+            UserDto userLogin = userService.LoginUser(user);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (userLogin.IdUser != 0)
             {
-                return View();
+                Session["UserLogged"] = userLogin;
+                return RedirectToAction("Dashboard");
             }
+
+            return View(userLogin);
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        //GET Dashboard
+        public ActionResult Dashboard()
         {
-            return View();
+            if (Session["UserLogged"] == null)
+            {
+                return Redirect("~/User/Login");
+            }
+            UserDto user = Session["UserLogged"] as UserDto;
+            if (user.IdState == 2)
+            {
+                return RedirectToAction("Inactivo");
+            }
+            if(user.IdRole == 1)
+            {
+                return RedirectToAction("ListaUsuarios");
+            }
+            if (user.IdRole == 2)
+            {
+                return RedirectToAction("Perfil");
+            }       
+
+            return View(user);            
         }
 
-        // POST: User/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Logout()
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            Session["UserLogged"] = null;
+            Session.Abandon();
+            return Redirect("~/User");
         }
     }
 }

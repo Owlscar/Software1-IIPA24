@@ -1,11 +1,28 @@
 ﻿using Software1_IIPA24.Dtos;
 using Software1_IIPA24.Repositories;
 using Software1_IIPA24.Utilities;
+using System;
 
 namespace Software1_IIPA24.Services
 {
     public class UserService
     {
+        public UserListDto ListarUsuarios()
+        {
+            UserListDto userList = new UserListDto();
+            UserReposiyoty userReposiyoty = new UserReposiyoty();
+            try
+            {
+                userList = userReposiyoty.ListarUsuarios();
+                return userList;
+            }
+            catch (Exception e)
+            {
+                userList.Response = 0;
+                userList.Message = e.InnerException.ToString();
+                return userList;
+            }
+        }
         public UserDto CreateUser(UserDto userModel)
         {
             UserDto responseUserDto = new UserDto();
@@ -54,11 +71,11 @@ namespace Software1_IIPA24.Services
             {
                 userResponse.Message = "Successful Login";
 
-                EmailConfigUtility gestorCorreo = new EmailConfigUtility();
-                string destinatario = "caballero1094@hotmail.com";
-                string asunto = "Registro exito / Reporte Semannal / ...";
-                string mensaje = this.mensaje(userResponse.Name);
-                gestorCorreo.EnviarCorreo(destinatario, asunto, mensaje, true);
+                //EmailConfigUtility gestorCorreo = new EmailConfigUtility();
+                //string destinatario = "caballero1094@hotmail.com";
+                //string asunto = "Registro exito / Reporte Semannal / ...";
+                //string mensaje = this.mensaje(userResponse.Name);
+                //gestorCorreo.EnviarCorreo(destinatario, asunto, mensaje, true);
             }
             else
             {

@@ -1,0 +1,55 @@
+﻿@model Software1_IIPA24.Dtos.UserDto
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dashboard</h2>
+
+@if (Session["UserLogged"] != null)
+{
+    if (Model.IdUser != 0)
+    {
+        <div class="text-bg-info">
+            @Html.DisplayFor(model => model.Message)
+        </div>
+
+        /*if (Model.IdRole == 1)
+        {
+            <h3>Welcome Administrator</h3>
+            <br />
+            <h4>@Html.DisplayFor(model => model.Name)</h4>
+            <h4>@Html.DisplayFor(model => model.IdUser)</h4>
+            <h4>@Html.DisplayFor(model => model.IdRole)</h4>
+            <h4>@Html.DisplayFor(model => model.Username)</h4>
+        }
+
+        if (Model.IdRole == 2)
+        {
+            <h3>Welcome User Normal</h3>
+            <br />
+            <h4>@Html.DisplayFor(model => model.Name)</h4>
+        }*/
+
+        <h3>Welcome User Normal</h3>
+        <br />
+        <h4>@Html.DisplayFor(model => model.Name)</h4>
+
+        <br />
+        <br />
+        <h3><a>@Html.ActionLink("Logout User", "Logout", "User")</a></h3>
+    }
+    else
+    {
+        <div class="text-bg-danger">
+            ERROR
+        </div>
+    }
+}
+else
+{
+    <div class="text-bg-danger">
+        @Html.Raw("NO TIENE UNA SESIÓN ACTIVA, POR FAVOR INICIE SESIÓN PARA UTILIZAR LA FUNCIONALIDAD.")
+    </div>
+}
